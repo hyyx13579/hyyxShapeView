@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="activity_base_bg">#F2F2F2</color>
+    <color name="item_bg_gray">#fbfbfb</color>
+    <color name="item_bg">#FFFFFF</color>
+    <color name="title_text_color">#FFFFFF</color>
+    <color name="text_normal_color">#505050</color>
+    <color name="text_light_color">#B4B4B4</color>
+    <color name="item_bg_deep">#B4B4B4</color>
+    <color name="text_red_color">#E00B03</color>
+    <color name="border_color">#d8d8d8</color>
+    <color name="care_level_one">#ee8593</color>
+    <color name="care_level_two">#f29a77</color>
+    <color name="care_level_three">#facc88</color>
+    <color name="care_level_four">#88c897</color>
+    <color name="money_color">#FF9900</color>
+    <color name="item_card_text_color">#797979</color>
+    <color name="colorGray">#CFCFCF</color>
+    <color name="colorWhite">#ffff</color>
+    <color name="titlecolor">#53CEC2</color>
+    <color name="colorblack">#000</color>
+    <color name="colorred">#FF0000</color>
+    <color name="alpha0">#00FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="light_gray">#99a4b7</color>
+    <color name="deep_gray">#394257</color>
+    <color name="border_gray">#d9dfe5</color>
+    <color name="bg_gray">#e1e1e1</color>
+    <color name="btn_gray">#d1d1d1</color>
+    <color name="glass_gall">#c2ebef</color>
+    <color name="light_blue">#87d0f2</color>
+    <color name="bg_gray_normal">#F5F5F5</color>
+    <color name="gray_color_79">#797979</color>
+    <color name="gray_color_d8">#D8D8D8</color>
+    <color name="gray_color_97">#979797</color>
+
+</resources>
