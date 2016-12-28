@@ -9,14 +9,14 @@ JitPack.io, add jitpack.io repositiory and dependency to your build.gradle:
 
        repositories {
       maven {
-          url "https://jitpack.io"
+          url `"https://jitpack.io"`
       }
       }
 
 	
 
         dependencies {
-        compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
+        compile `'com.github.hyyx13579:hyyxShapeView:v2.0'`
         }
 
 
