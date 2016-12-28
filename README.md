@@ -1,17 +1,25 @@
 # hyyxShapeView
 
-JitPack.io, add jitpack.io repositiory and dependency to your build.gradle:
+hyyxShapeView for Android
+============================
 
-  repositories {
+Download and Import
+--------------------
+
+
+    JitPack.io, add jitpack.io repositiory and dependency to your build.gradle:
+
+     repositories {
       maven {
           url "https://jitpack.io"
       }
-  }
+    }
 
-  dependencies {
+	
+
+      dependencies {
       compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
-  }
-
+      }
 
 
 可以绘制的图形：
