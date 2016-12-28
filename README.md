@@ -1,4 +1,3 @@
-# hyyxShapeView
 
 hyyxShapeView for Android
 ============================
@@ -6,20 +5,19 @@ hyyxShapeView for Android
 Download and Import
 --------------------
 
+JitPack.io, add jitpack.io repositiory and dependency to your build.gradle:
 
-    JitPack.io, add jitpack.io repositiory and dependency to your build.gradle:
-
-     repositories {
+       repositories {
       maven {
           url "https://jitpack.io"
       }
-    }
+      }
 
 	
 
-      dependencies {
-      compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
-      }
+        dependencies {
+        compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
+        }
 
 
 可以绘制的图形：
