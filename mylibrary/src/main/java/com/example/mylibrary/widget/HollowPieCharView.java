@@ -1,4 +1,4 @@
-package com.example.hyyx.hyyxshape.widget;
+package com.example.mylibrary.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 
-import com.example.hyyx.hyyxshape.bean.PieData;
-import com.example.hyyx.hyyxshape.utils.CommonUtils;
+import com.example.mylibrary.bean.PieData;
+import com.example.mylibrary.utils.CommonUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

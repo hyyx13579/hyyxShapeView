@@ -1,4 +1,4 @@
-package com.example.hyyx.hyyxshape.bean;
+package com.example.mylibrary.bean;
 
 /**
  * Created by hyyx on 2016/12/23.

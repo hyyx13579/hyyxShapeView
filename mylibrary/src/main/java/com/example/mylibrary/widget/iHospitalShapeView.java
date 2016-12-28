@@ -1,4 +1,4 @@
-package com.example.hyyx.hyyxshape.widget;
+package com.example.mylibrary.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,9 +14,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-import com.example.hyyx.hyyxshape.R;
-import com.example.hyyx.hyyxshape.bean.NuringInfoShapeBean;
-import com.example.hyyx.hyyxshape.utils.CommonUtils;
+import com.example.mylibrary.R;
+import com.example.mylibrary.bean.NuringInfoShapeBean;
+import com.example.mylibrary.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
