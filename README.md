@@ -13,7 +13,7 @@ hyyxShapeView for Android
          }
 
         dependencies {
-        compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
+            compile 'com.github.hyyx13579:hyyxShapeView:v2.0'
         }
 	
 控件分类
