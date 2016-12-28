@@ -19,20 +19,20 @@ hyyxShapeView for Android
 控件分类
 --------------------
 	1.医院通用护理信息的图表功能，可以对体温，血压，血糖，脉搏，呼吸，五大类的信息进行散点图，折线图，柱形图的图表绘制。
-    使用方法
-在xml文件中
+##使用方法
+###在xml文件中
 
       <com.example.mylibrary.widget.iHospitalShapeView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Hello World!" />
 
-在javacode中
+###在javacode中
 
       iHospitalShapeView iHospitalShapeView = new iHospitalShapeView(context);
       layout.addview(iHospitalShapeView);
-      
-属性
+
+###属性
 
       setAxisX(float maxValue, int divideSize)//设置X轴的最大值及刻度线数量（包括0坐标刻度）
       setAxisY(float maxValue, int divideSize)//设置Y轴的最大值及刻度线数量（包括0坐标刻度）
@@ -62,15 +62,14 @@ hyyxShapeView for Android
                 setAxisY(50, 10);
                 break;
         }
-	
-	
-	
-      setShapeInfo(List<NuringInfoShapeBean> nuringInfoShapeBeen, int drawShape)//设置数据，并选择画什么图形
-      public static final int DRAWPOINT = 100;//折线图
-      public static final int DRAWColumn = 99;//柱状图
+     
+     setShapeInfo(List<NuringInfoShapeBean> nuringInfoShapeBeen, int drawShape)//设置数据，并选择画什么图形
+     public static final int DRAWPOINT = 100;//折线图
+     public static final int DRAWColumn = 99;//柱状图
       
-      setRedLine(float reddataOne, float reddataTwo)//设置标准值的区域（带渐变效果），如果有一项为0，则变为红色标注线
+     setRedLine(float reddataOne, float reddataTwo)//设置标准值的区域（带渐变效果），如果有一项为0，则变为红色标注线
       
+
 2.空心饼状图
 3.普通折线图
 
