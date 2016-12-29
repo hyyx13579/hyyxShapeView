@@ -52,30 +52,29 @@ public class iHospitalShapeView extends View {
     private final int originY = 10;
 
 
-    //Type的类型值
     public static final int TYPE_TEMP = 1;
     public static final int TYPE_BLOODPRESURE = 2;
     public static final int TYPE_PULSE = 3;
     public static final int TYPE_BLOODSUGAR = 4;
     public static final int TYPE_BREATHE = 5;
 
-    //判读柱形图还是散点图的标记
     private int DRAWSHAPE = 0;
-
-    public static final int DRAWPOINT = 100;
     public static final int DRAWColumn = 99;
     public static final int DRAWBROKRNLINE = 98;
 
     private String[] xLabels;
     private int[] yLabels = new int[20];
-    private double[] tempData;
-    private double[] bloodPresureDataLow;
-    private double[] bloodPresureDataHeigt;
-    private double[] brokenLineData;
     private float reddataOne, reddataTwo;
     private Path path;
     private float mShapeHeight;
     private List<NuringInfoShapeBean> nuringInfoShapeBeen = new ArrayList<>();
+    private boolean isSingleLine = true;
+    private boolean isPoint = false;
+    private boolean isDrawMarkYLine = true;
+    private boolean isDottedY = false;
+    private boolean isDrawMarkXLine = false;
+    private boolean isDottedX = false;
+
 
     public iHospitalShapeView(Context context) {
         this(context, null, 0);
@@ -229,6 +228,18 @@ public class iHospitalShapeView extends View {
         invalidate();
     }
 
+    public void isPoint(boolean isPoint) {
+        this.isPoint = isPoint;
+        invalidate();
+    }
+
+
+    public void setBloodpresureShape(boolean isSinleling, boolean isPoint) {
+        this.isSingleLine = isSinleling;
+        this.isPoint = isPoint;
+        invalidate();
+    }
+
 
     /**
      * 设置红线
@@ -241,6 +252,32 @@ public class iHospitalShapeView extends View {
         this.reddataOne = reddataOne;
         this.reddataTwo = reddataTwo;
         invalidate();
+
+    }
+
+
+    private void isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY) {
+        this.isDrawMarkYLine = isDrawMarkYLine;
+        this.isDottedY = isDottedY;
+
+
+    }
+
+    private void isDrawMarkY(boolean isDrawMarkYLine) {
+        this.isDrawMarkYLine = isDrawMarkYLine;
+
+    }
+
+
+    private void isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX) {
+        this.isDrawMarkXLine = isDrawMarkXLine;
+        this.isDottedX = isDottedX;
+
+
+    }
+
+    private void isDrawMarkX(boolean isDrawMarkXLine) {
+        this.isDrawMarkXLine = isDrawMarkXLine;
 
     }
 
@@ -267,36 +304,53 @@ public class iHospitalShapeView extends View {
 
     }
 
+
     @Override
     public void onDraw(Canvas canvas) {
 
         mShapeHeight = height - CommonUtils.Dp2Px(getContext(), 25);
         drawAxisXandY(canvas);//X,Y轴
-        drawAxisScaleMarkValueX(canvas, mPaint);
-        drawAxisScaleMarkValueY(canvas, mPaint);
-        drawMarkY(canvas, false);//Y轴各点延长线，可选实线，虚线
-        // drawMarkX(canvas, false);//X轴各点延长线，可选实线，虚线
-        //drawAxisScaleMarkXandY(canvas);//刻度线
+        if (isDrawMarkYLine) {
+            drawMarkY(canvas, isDottedY);//Y轴各点延长线，可选实线，虚线
+        }
+        if (isDrawMarkXLine) {
+            drawMarkX(canvas, isDottedX);//X轴各点延长线，可选实线，虚线
+        }
 
+
+        //drawAxisScaleMarkXandY(canvas);//XY轴各点的刻度线
+        drawAxisScaleMarkValueX(canvas, mPaint);//x轴的值
+        drawAxisScaleMarkValueY(canvas, mPaint);//y轴的值
         switch (DRAWSHAPE) {
-            case DRAWBROKRNLINE:
-                drawBrokrnline(canvas, painPoint);
-                break;
             case DRAWColumn:
                 if (reddataOne != 0 && reddataTwo != 0) {
                     drawShader(canvas, paintShader, reddataTwo, reddataOne, "#B3F5F2", getContext().getResources().getColor(R.color.titlecolor));//阴影
                 } else {
-                    drawRedLineMarkY(canvas, reddataTwo);
+                    if (reddataOne + reddataTwo != 0) {
+                        drawRedLineMarkY(canvas, reddataTwo);
+                    }
+
                 }
 
                 drawColumn(canvas, mPaint);
 
                 break;
-            case DRAWPOINT:
-                drawShader(canvas, paintShader, 90, 60, "#B3F5F2", getContext().getResources().getColor(R.color.titlecolor));
-                drawShader(canvas, paintShader, 140, 90, "#CDE2F7", getContext().getResources().getColor(R.color.light_blue));
-                drawMarkX(canvas, false);//X轴各点延长线，可选实线，虚线
-                drawPoint(canvas, false);//绘制高低压,可选散点或者折线图
+            case DRAWBROKRNLINE:
+                if (isSingleLine) {
+                    if (reddataOne != 0 && reddataTwo != 0) {
+                        drawShader(canvas, paintShader, reddataTwo, reddataOne, "#B3F5F2", getContext().getResources().getColor(R.color.titlecolor));//阴影
+                    } else {
+                        if (reddataOne + reddataTwo != 0) {
+                            drawRedLineMarkY(canvas, reddataTwo);
+                        }
+
+                    }
+                } else {
+                    drawShader(canvas, paintShader, 90, 60, "#B3F5F2", getContext().getResources().getColor(R.color.titlecolor));
+                    drawShader(canvas, paintShader, 140, 90, "#CDE2F7", getContext().getResources().getColor(R.color.light_blue));
+                }
+
+                drawLine(canvas, isPoint, isSingleLine);//绘制高低压,可选散点或者折线图
                 break;
 
         }
@@ -452,10 +506,11 @@ public class iHospitalShapeView extends View {
         }
     }
 
-    private void drawPoint(Canvas canvas, boolean isPoint) {
+    private void drawLine(Canvas canvas, boolean isPoint, boolean isSingleLine) {
 
         float cyLow = 0;
         float cy = 0;
+        double v = 0;
 
         painPoint.setColor(getContext().getResources().getColor(R.color.titlecolor));
         painPoint.setStrokeWidth(CommonUtils.Dp2Px(getContext(), 2));
@@ -463,22 +518,29 @@ public class iHospitalShapeView extends View {
         float cellHeight = mShapeHeight / axisDivideSizeY;
         path = new Path();
 
+
         for (int i = 0; i < nuringInfoShapeBeen.size(); i++) {
-
-            //限制一屏显示8条数据
-
             float cx = (cellWidth * (i + 1) + originX);
             int i1 = yLabels[yLabels.length - 1] - yLabels[0];
-            if (TextUtils.isEmpty(nuringInfoShapeBeen.get(i).getLowValue())) {
-                break;
+            float v2 = i1 / (cellHeight * (yLabels.length - 1));
+            if (isSingleLine) {
+                if (TextUtils.isEmpty(nuringInfoShapeBeen.get(i).getValue())) {
+                    break;
+                } else {
+                    v = Float.parseFloat(nuringInfoShapeBeen.get(i).getValue()) - yLabels[0];
+                }
+
             } else {
-                float v2 = i1 / (cellHeight * (yLabels.length - 1));
-                double v = Float.parseFloat(nuringInfoShapeBeen.get(i).getLowValue()) - yLabels[0];
-                double v1 = v / v2;
-                cyLow = (originY + mShapeHeight) - ((float) v1);
-                painPoint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(cx, cyLow, 7, painPoint);
+                if (TextUtils.isEmpty(nuringInfoShapeBeen.get(i).getLowValue())) {
+                    break;
+                } else {
+                    v = Float.parseFloat(nuringInfoShapeBeen.get(i).getLowValue()) - yLabels[0];
+                }
             }
+            double v1 = v / v2;
+            cyLow = (originY + mShapeHeight) - ((float) v1);
+            painPoint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle(cx, cyLow, 7, painPoint);
 
 
             if (!isPoint) {
@@ -504,18 +566,15 @@ public class iHospitalShapeView extends View {
         painPoint.setAntiAlias(true);
 
         for (int i = 0; i < nuringInfoShapeBeen.size(); i++) {
-
-            //限制一屏显示8条数据
-
             float cx = (cellWidth * (i + 1) + originX);
             int i1 = yLabels[yLabels.length - 1] - yLabels[0];
 
-            if (TextUtils.isEmpty(nuringInfoShapeBeen.get(i).getLowValue())) {
+            if (TextUtils.isEmpty(nuringInfoShapeBeen.get(i).getHightValue())) {
                 break;
             } else {
                 float v2 = i1 / (cellHeight * (yLabels.length - 1));
-                double v = Float.parseFloat(nuringInfoShapeBeen.get(i).getHightValue()) - yLabels[0];
-                double v1 = v / v2;
+                double vv = Float.parseFloat(nuringInfoShapeBeen.get(i).getHightValue()) - yLabels[0];
+                double v1 = vv / v2;
                 cy = (originY + mShapeHeight) - ((float) v1);
                 painPoint.setStyle(Paint.Style.FILL);
                 canvas.drawCircle(cx, cy, 7, painPoint);
@@ -567,52 +626,5 @@ public class iHospitalShapeView extends View {
             }
 
         }
-    }
-
-
-    private void drawBrokrnline(Canvas canvas, Paint paint) {
-
-
-        paint.setColor(getContext().getResources().getColor(R.color.titlecolor));
-        paint.setAntiAlias(true);
-
-
-        if (brokenLineData == null)
-            return;
-        float cellWidth = width / axisDivideSizeX;
-        float cellHeight = mShapeHeight / axisDivideSizeY;
-        path = new Path();
-
-        for (int i = 0; i < brokenLineData.length; i++) {
-
-            //限制一屏显示8条数据
-            if (i >= 8) {
-                break;
-            } else {
-
-                float cx = (cellWidth * (i + 1) + originX);
-                int i1 = yLabels[yLabels.length - 1] - yLabels[0];
-                float v2 = i1 / (cellHeight * (yLabels.length - 1));
-                double v = brokenLineData[i] - yLabels[0];
-                double v1 = v / v2;
-                float cyLow = (originY + mShapeHeight) - ((float) v1);
-
-                canvas.drawCircle(cx, cyLow, 7, paint);
-                if (i == 0) {
-                    path.moveTo(cx, cyLow);
-                } else {
-                    path.lineTo(cx, cyLow);
-                }
-
-                // canvas.drawRect(leftX, leftTopY, rightX, bottmoY, mPaint);//左上角x,y右下角x,y，画笔
-            }
-        }
-        Paint paint1 = new Paint();
-        paint1.setStyle(Paint.Style.STROKE);
-        paint1.setColor(getContext().getResources().getColor(R.color.titlecolor));
-        paint1.setAntiAlias(true);
-        canvas.drawPath(path, paint1);
-
-
     }
 }
