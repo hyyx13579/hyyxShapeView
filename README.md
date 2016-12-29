@@ -79,12 +79,13 @@ hyyxShapeView for Android
 	    public NuringInfoShapeBean(String value, String time) {//NuringInfoShapeBean的构造函数
 		this.value = value;//值
 		this.time = time;//时间}
-	    public NuringInfoShapeBean(String time, String hightValue, String lowValue) {
+	    
+            public NuringInfoShapeBean(String time, String hightValue, String lowValue) {
 		this.time = time;
 		this.hightValue = hightValue;//血压形式高压 
 		this.lowValue = lowValue;//低压}
 		
-             //可选择的图形
+       //可选择的图形
 	     public static final int DRAWPOINT = 100;//折线图
 	     public static final int DRAWColumn = 99;//柱状图
      
