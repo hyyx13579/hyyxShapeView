@@ -20,6 +20,17 @@ hyyxShapeView for Android
 --------------------
 ## 1.医院通用护理信息的图表功能，可以对体温，血压，血糖，脉搏，呼吸，五大类的信息进行散点图，折线图，柱形图的图表绘制。
 ### 使用方法
+
+#### 示例展示
+
+![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/pluse.png "脉搏")
+
+![temp](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/temp.png "脉搏")
+
+![bloodpresure](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/bloodpresure.png "血压")
+
+
+
 #### 在xml文件中
 
       <com.example.mylibrary.widget.iHospitalShapeView
@@ -36,6 +47,7 @@ hyyxShapeView for Android
 
       setAxisX(float maxValue, int divideSize)//设置X轴的最大值及刻度线数量（包括0坐标刻度）
       setAxisY(float maxValue, int divideSize)//设置Y轴的最大值及刻度线数量（包括0坐标刻度）
+     
       setDefaultYdataInfo(int type)//设置view自带的Y轴数据,包括体温,血压,脉搏,血糖,呼吸的五种标准化数值
 
       switch (type) {
@@ -65,16 +77,17 @@ hyyxShapeView for Android
      setShapeInfo(List<NuringInfoShapeBean> nuringInfoShapeBeen, int drawShape)//设置数据，并选择画什么图形
      public static final int DRAWPOINT = 100;//折线图
      public static final int DRAWColumn = 99;//柱状图
+     
      setBloodpresureShape(boolean isSinleling, boolean isPoint)//设置趋势图单条线或者双条线，可设置折线趋势图或散点趋势图
+     
      setRedLine(float reddataOne, float reddataTwo)//设置标准值的区域（带渐变效果），如果有一项为0，则变为红色标注线
+     
      isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX)//设置x轴各点延长线，线可设置实线和虚线         
      isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY)//设置y轴各点延长线，线可设置实线和虚线
      
      
          
-![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/pluse.png "脉搏")
 
-![temp](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/temp.png "脉搏")
 
 2.空心饼状图
 3.普通折线图
