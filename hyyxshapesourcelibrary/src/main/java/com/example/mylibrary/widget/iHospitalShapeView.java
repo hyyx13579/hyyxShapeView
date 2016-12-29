@@ -256,27 +256,27 @@ public class iHospitalShapeView extends View {
     }
 
 
-    private void isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY) {
+    public void isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY) {
         this.isDrawMarkYLine = isDrawMarkYLine;
         this.isDottedY = isDottedY;
 
 
     }
 
-    private void isDrawMarkY(boolean isDrawMarkYLine) {
+    public void isDrawMarkY(boolean isDrawMarkYLine) {
         this.isDrawMarkYLine = isDrawMarkYLine;
 
     }
 
 
-    private void isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX) {
+    public void isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX) {
         this.isDrawMarkXLine = isDrawMarkXLine;
         this.isDottedX = isDottedX;
 
 
     }
 
-    private void isDrawMarkX(boolean isDrawMarkXLine) {
+    public void isDrawMarkX(boolean isDrawMarkXLine) {
         this.isDrawMarkXLine = isDrawMarkXLine;
 
     }
