@@ -21,7 +21,7 @@ hyyxShapeView for Android
 ## 1.医院通用护理信息的图表功能，可以对体温，血压，血糖，脉搏，呼吸，五大类的信息进行散点图，折线图，柱形图的图表绘制。
 ### 使用方法
 
-#### 示例展示
+#### 示例
 
 ![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/pluse.png "脉搏")
 
