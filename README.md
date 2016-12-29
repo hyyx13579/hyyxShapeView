@@ -74,16 +74,26 @@ hyyxShapeView for Android
                 break;
         }
      
-     setShapeInfo(List<NuringInfoShapeBean> nuringInfoShapeBeen, int drawShape)//设置数据，并选择画什么图形
-     public static final int DRAWPOINT = 100;//折线图
-     public static final int DRAWColumn = 99;//柱状图
+     setShapeInfo(List<NuringInfoShapeBean> nuringInfoShapeBeen, int drawShape)//设置数据，并选择画什么图形】
+	     public NuringInfoShapeBean(String value, String time) {//NuringInfoShapeBean的构造函数
+		this.value = value;//值
+		this.time = time;//时间	
+	     }
+	    public NuringInfoShapeBean(String time, String hightValue, String lowValue) {
+		this.time = time;
+		this.hightValue = hightValue;
+		this.lowValue = lowValue;
+	    }
+	     //可选择的图形
+	     public static final int DRAWPOINT = 100;//折线图
+	     public static final int DRAWColumn = 99;//柱状图
      
-     setBloodpresureShape(boolean isSinleling, boolean isPoint)//设置趋势图单条线或者双条线，可设置折线趋势图或散点趋势图
-     
-     setRedLine(float reddataOne, float reddataTwo)//设置标准值的区域（带渐变效果），如果有一项为0，则变为红色标注线
-     
-     isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX)//设置x轴各点延长线，线可设置实线和虚线         
-     isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY)//设置y轴各点延长线，线可设置实线和虚线
+	     setBloodpresureShape(boolean isSinleling, boolean isPoint)//设置趋势图单条线或者双条线，可设置折线趋势图或散点趋势图
+
+	     setRedLine(float reddataOne, float reddataTwo)//设置标准值的区域（带渐变效果），如果有一项为0，则变为红色标注线
+
+	     isDrawMarkX(boolean isDrawMarkXLine, boolean isDottedX)//设置x轴各点延长线，线可设置实线和虚线         
+	     isDrawMarkY(boolean isDrawMarkYLine, boolean isDottedY)//设置y轴各点延长线，线可设置实线和虚线
      
      
          
