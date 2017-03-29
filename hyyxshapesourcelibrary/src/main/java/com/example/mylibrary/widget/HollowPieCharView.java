@@ -45,9 +45,37 @@ public class HollowPieCharView extends View {
     private Paint mLinePaint;
     private DecimalFormat dff;
     private boolean isHaveTextLine;
+    private String resToRound;
+    private boolean isStartAnimator = false;
+    private float animatiorAngle;
 
 
+    public void setRadius(int mRadius) {
+        this.mRadius = mRadius;
+    }
 
+
+    public void setCenterTitle(String centerTitle) {
+        this.centerTitle = centerTitle;
+    }
+
+
+    public void setPieDate(List<PieData> data) {
+        mPieData.clear();
+        mPieData.addAll(data);
+        mTotalValue = 0;
+        for (PieData piedata : mPieData) {
+            mTotalValue += piedata.getValue();
+        }
+        pieAngles = new float[mPieData.size()];
+
+        if (mPieData.size() > 5) {
+            isHaveTextLine = false;
+        } else {
+            isHaveTextLine = true;
+        }
+
+    }
 
 
     public HollowPieCharView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -89,34 +117,6 @@ public class HollowPieCharView extends View {
     }
 
 
-    public void setRadius(int mRadius) {
-        this.mRadius = mRadius;
-    }
-
-
-    public void setCenterTitle(String centerTitle) {
-        this.centerTitle = centerTitle;
-    }
-
-
-    public void setPieData(List<PieData> data) {
-        mPieData.clear();
-        mPieData.addAll(data);
-        mTotalValue = 0;
-        for (PieData piedata : mPieData) {
-            mTotalValue += piedata.getValue();
-        }
-        pieAngles = new float[mPieData.size()];
-
-        if (mPieData.size() > 4) {
-            isHaveTextLine = false;
-        } else {
-            isHaveTextLine = true;
-        }
-
-    }
-
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -129,7 +129,7 @@ public class HollowPieCharView extends View {
             width = wideSize;
         } else {
             width = mRadius * 2 + getPaddingLeft() + getPaddingRight();
-            if (wideMode == MeasureSpec.AT_MOST) {
+            if (wideMode == MeasureSpec.AT_MOST) {//如果是wrap
                 width = Math.min(width, wideSize);
             }
 
@@ -160,10 +160,10 @@ public class HollowPieCharView extends View {
         oval.right = mRadius;
         oval.bottom = mRadius;
 
-        touchOval.left = -mRadius - 16;
-        touchOval.top = -mRadius - 16;
-        touchOval.right = mRadius + 16;
-        touchOval.bottom = mRadius + 16;
+        touchOval.left = -mRadius - 30;
+        touchOval.top = -mRadius - 30;
+        touchOval.right = mRadius + 30;
+        touchOval.bottom = mRadius + 30;
     }
 
 
@@ -180,43 +180,42 @@ public class HollowPieCharView extends View {
 
     private void drawPie(Canvas canvas) {
         float currentAngle = 0.0f;
+
+
         for (int i = 0; i < mPieData.size(); i++) {
             float needDrawAngle = mPieData.get(i).getValue() * 1.0f / mTotalValue * 360;
             mPaint.setColor(mPieData.get(i).getColor());
-            if (Math.min(needDrawAngle, animatedValue - currentAngle) >= 0) {
-
-                if (position - 1 == i) {
-                    canvas.drawArc(touchOval, currentAngle, Math.min(needDrawAngle, animatedValue - currentAngle), false, mPaint);
-                   if (isHaveTextLine){
-                       drawTextLine(canvas, currentAngle, needDrawAngle);
-                   }
-
-                } else {
-                    canvas.drawArc(oval, currentAngle, Math.min(needDrawAngle, animatedValue - currentAngle), false, mPaint);
-                    if (isHaveTextLine){
-                        drawTextLine(canvas, currentAngle, needDrawAngle);
+            float res = mPieData.get(i).getValue() / mTotalValue * 100;
+            resToRound = dff.format(res) + "%";
+            if (isStartAnimator) {
+                animatiorAngle = animatedValue - currentAngle;
+            } else {
+                animatiorAngle = currentAngle;
+            }
+            {
+                if (Math.min(needDrawAngle, animatiorAngle) >= 0) {
+                    if (!isStartAnimator) {
+                        animatiorAngle = needDrawAngle;
                     }
 
+                    if (position - 1 == i) {
+                        canvas.drawArc(touchOval, currentAngle, Math.min(needDrawAngle, animatiorAngle), false, mPaint);
 
+                    } else {
+                        canvas.drawArc(oval, currentAngle, Math.min(needDrawAngle, animatiorAngle), false, mPaint);
+
+                    }
+                    if (isHaveTextLine) {
+                        drawTextLine(canvas, currentAngle, needDrawAngle);
+                    }
                 }
+                pieAngles[i] = currentAngle;
+                currentAngle += needDrawAngle;
 
             }
 
-            pieAngles[i] = currentAngle;
-            currentAngle += needDrawAngle;
-
-
-            float res = mPieData.get(i).getValue() / mTotalValue * 100;
-            String resToRound = dff.format(res);
-//            if (currentAngle % 360.0 >= 90.0 && currentAngle % 360.0 <= 270.0) {
-//                canvas.drawText(resToRound + "%", pxt - mTextPaint.measureText(resToRound + "%"), pyt, mTextPaint);
-//            } else {
-//                canvas.drawText(resToRound + "%", pxt, pyt, mTextPaint);
-//            }
 
         }
-
-
     }
 
     private void drawTextLine(Canvas canvas, float currentAngle, float needDrawAngle) {
@@ -234,15 +233,15 @@ public class HollowPieCharView extends View {
             textAngle = textAngle - 360;
         }
 
-        if (textAngle >= 0 && textAngle <= 180) { //画布坐标系第一象限(数学坐标系第四象限)
+        if (textAngle >= 0 && textAngle <= 180) {
             mTextPaint.setTextAlign(Paint.Align.LEFT);
-            String content = "测试文字123";
+            String content = resToRound;
             float v = mTextPaint.measureText(content);
             canvas.drawLine(pxt, pyt, pxt + v + 20, pyt, mLinePaint);
             canvas.drawText(content, pxt, pyt - 20, mTextPaint);
-        } else if (textAngle > 180 && textAngle <= 360) { //画布坐标系第三象限(数学坐标系第二象限)
+        } else if (textAngle > 180 && textAngle <= 360) {
             mTextPaint.setTextAlign(Paint.Align.RIGHT);
-            String content = "测试文字456789";
+            String content = resToRound;
             float v = mTextPaint.measureText(content);
             canvas.drawLine(pxt, pyt, pxt - v - 20, pyt, mLinePaint);
             canvas.drawText(content, pxt, pyt - 20, mTextPaint);
@@ -263,6 +262,7 @@ public class HollowPieCharView extends View {
     public void startDraw() {
         if (mPieData != null && centerTitle != null) {
             initAnimator();
+            isStartAnimator = true;
         }
     }
 
@@ -283,27 +283,36 @@ public class HollowPieCharView extends View {
 
 
     public boolean onTouchEvent(MotionEvent event) {
-        if (isHaveTextLine){
+        if (isHaveTextLine) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     float x = event.getX() - (mUseWidth / 2);
                     float y = event.getY() - (mUseHeight / 2);
                     float touchAngle = 0;
-                    if (x < 0 && y < 0) {  //2 象限
+                    if (x < 0 && y < 0) {
                         touchAngle += 180;
-                    } else if (y < 0 && x > 0) {  //1象限
+                    } else if (y < 0 && x > 0) {
                         touchAngle += 360;
-                    } else if (y > 0 && x < 0) {  //3象限
+                    } else if (y > 0 && x < 0) {
                         touchAngle += 180;
                     }
                     //Math.atan(y/x) 返回正数值表示相对于 x 轴的逆时针转角，返回负数值则表示顺时针转角。
                     //返回值乘以 180/π，将弧度转换为角度。
+                    //转换以弧度为单位测得的角度大致相等的角度
+
+
                     touchAngle += Math.toDegrees(Math.atan(y / x));
                     if (touchAngle < 0) {
                         touchAngle = touchAngle + 360;
                     }
                     float touchRadius = (float) Math.sqrt(y * y + x * x);
                     if (touchRadius < mRadius) {
+                        //二分法
+                        //技巧：
+                        //[1] 搜索值不是数组元素，且在数组范围内，从1开始计数，得“ - 插入点索引值”；
+                        // [2] 搜索值是数组元素，从0开始计数，得搜索值的索引值；
+                        //[3] 搜索值不是数组元素，且大于数组内元素，索引值为 – (length + 1);
+                        //[4] 搜索值不是数组元素，且小于数组内元素，索引值为 – 1。
                         position = -Arrays.binarySearch(pieAngles, (touchAngle)) - 1;
                         invalidate();
 
