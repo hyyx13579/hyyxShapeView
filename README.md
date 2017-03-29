@@ -103,7 +103,7 @@ hyyxShapeView for Android
 
 ![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/hollowPie.png "空心饼状图")
 
-``
+```
  List<PieData> data = new ArrayList<>();
   for (int i = 1; i <= 5; i++) {
     int r = (new Random().nextInt(100) + 10) * i;
@@ -118,7 +118,7 @@ hyyxShapeView for Android
           hollowPie.setPieDate(data);
           hollowPie.setCenterTitle("总记");
           hollowPie.startDraw();//可选择是否开启动画效果
-``
+```
 
 ## 3.普通折线图
 
