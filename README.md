@@ -104,6 +104,7 @@ hyyxShapeView for Android
 ![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/hollowPie.png "空心饼状图")
 
 ```
+ 设置部分属性
  List<PieData> data = new ArrayList<>();
   for (int i = 1; i <= 5; i++) {
     int r = (new Random().nextInt(100) + 10) * i;
