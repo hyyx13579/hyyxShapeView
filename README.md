@@ -98,27 +98,27 @@ hyyxShapeView for Android
      
      
          
-##2.空心饼状图，可点击，低于6个数据有指示线，高于6个数据没有指示线
+## 2.空心饼状图，可点击，低于6个数据有指示线，高于6个数据没有指示线
 #### 示例
 
 ![pluse](https://github.com/hyyx13579/hyyxShapeView/blob/master/screens/hollowPie.png "空心饼状图")
 
 ``
  List<PieData> data = new ArrayList<>();
-          for (int i = 1; i <= 5; i++) {
-              int r = (new Random().nextInt(100) + 10) * i;
-              int g = (new Random().nextInt(100) + 10) * 3 * i;
-              int b = (new Random().nextInt(100) + 10) * 2 * i;
-              int color = Color.rgb(r, g, b);
-              if (Math.abs(r - g) > 10 && Math.abs(r - b) > 10 && Math.abs(b - g) > 10) {
-                  data.add(new PieData(i * 10, color));
-              }
+  for (int i = 1; i <= 5; i++) {
+    int r = (new Random().nextInt(100) + 10) * i;
+    int g = (new Random().nextInt(100) + 10) * 3 * i;
+    int b = (new Random().nextInt(100) + 10) * 2 * i;
+    int color = Color.rgb(r, g, b);
+    if (Math.abs(r - g) > 10 && Math.abs(r - b) > 10 && Math.abs(b - g) > 10) {
+       data.add(new PieData(i * 10, color));
           }
+        }
 
           hollowPie.setPieDate(data);
           hollowPie.setCenterTitle("总记");
           hollowPie.startDraw();//可选择是否开启动画效果
 ``
 
-3.普通折线图
+## 3.普通折线图
 
